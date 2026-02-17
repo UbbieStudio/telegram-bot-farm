@@ -1,0 +1,5 @@
+python-telegram-bot[job-queue]==21.10
+openai==1.61.0
+google-generativeai==0.8.4
+redis==5.2.1
+python-dotenv==1.0.1

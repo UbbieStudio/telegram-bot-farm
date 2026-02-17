@@ -1,0 +1,29 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [ main ] # This triggers every time you push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/bots/telegram-bot-farm
+            # If the directory is empty, clone the repo. Otherwise, just pull latest.
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/${{ github.repository }}.git .
+            else
+              git pull origin main
+            fi
+            # Rebuild and restart the Docker containers
+            docker compose up -d --build --remove-orphans

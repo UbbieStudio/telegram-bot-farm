@@ -1,0 +1,25 @@
+services:
+  # Shared Redis instance for memory/state
+  redis:
+    image: redis:7-alpine
+    container_name: bot_farm_redis
+    restart: always
+    volumes:
+      - ./data/redis:/data
+
+  # The AI Assistant Bot
+  ai_assistant:
+    build: .
+    container_name: ai_assistant_bot
+    restart: always
+    env_file: .env
+    environment:
+      # This forces the Google library to use the stable API version
+      - GOOGLE_API_VERSION=v1
+    depends_on:
+      - redis
+    command: python bots/ai_assistant/main.py
+
+networks:
+  default:
+    name: bot_farm_network
