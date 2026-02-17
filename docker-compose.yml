@@ -15,11 +15,20 @@ services:
     depends_on:
       - redis
 
-  welcome_bot: # NEW BOT
+  welcome_bot:
     build: .
     container_name: welcome_bot
     restart: always
     env_file: .env
     command: python bots/welcome_bot/main.py
+    depends_on:
+      - redis
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: redis_insight
+    restart: always
+    ports:
+      - "8001:8001"
     depends_on:
       - redis
