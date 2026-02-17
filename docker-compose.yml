@@ -25,13 +25,13 @@ services:
       - redis
 
   redis-insight:
-    image: redis/redisinsight:latest
+    # Using a specific older stable version
+    image: redis/redisinsight:2.40
     container_name: redis_insight
     restart: always
     ports:
       - "8001:8001"
-    # No custom user or volumes for this test to rule out permission locks
     environment:
-      - REDISINSIGHT_PORT=8001
+      - RIPORT=8001
     depends_on:
       - redis
