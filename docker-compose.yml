@@ -29,11 +29,7 @@ services:
     container_name: redis_insight
     restart: always
     ports:
-      - "8001:8001"
-    environment:
-      - REDISINSIGHT_PORT=8001
-      - REDISINSIGHT_HOST=0.0.0.0
-      - REDISINSIGHT_AGREE_EULA=yes
-      - REDISINSIGHT_PRIVACY_POLICY_AGREED=yes
+      - "8001:5540"
+    # No volumes or environment variables to minimize points of failure
     depends_on:
       - redis
