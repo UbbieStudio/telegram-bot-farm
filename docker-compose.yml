@@ -29,6 +29,6 @@ services:
     container_name: redis_insight
     restart: always
     ports:
-      - "8001:8001"
+      - "0.0.0.0:8001:8001" # Explicitly bind to all network interfaces
     depends_on:
       - redis
