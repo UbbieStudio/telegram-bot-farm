@@ -25,15 +25,15 @@ services:
       - redis
 
   redis-insight:
-    image: redis/redisinsight:2.54
+    image: redis/redisinsight:latest
     container_name: redis_insight
     restart: always
-    # Corrected entrypoint path
-    entrypoint: ["node", "share/redisinsight/api/dist/src/main.js"]
     ports:
       - "8001:8001"
     environment:
       - REDISINSIGHT_PORT=8001
       - REDISINSIGHT_HOST=0.0.0.0
+      - REDISINSIGHT_AGREE_EULA=yes
+      - REDISINSIGHT_PRIVACY_POLICY_AGREED=yes
     depends_on:
       - redis
